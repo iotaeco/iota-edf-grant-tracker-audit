@@ -1,0 +1,12 @@
+{
+    "name": "iota-edf-grant-tracker-audit",
+    "version": "1.0.0",
+    "description": "IOTA EDF Grant/Donation Tracker Audit Data Validation",
+    "main": "index.js",
+    "author": "Martyn Janes <martyn@iota.eco>",
+    "license": "MIT",
+    "dependencies": {
+        "request": "^2.87.0",
+        "request-promise-native": "^1.0.5"
+    }
+}
