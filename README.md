@@ -8,8 +8,9 @@ The documents referenced in the bundles are then downloaded from online storage 
 
 ## Running
 
-To run the code just issue the following command:
+To run the code just issue the following commands:
 
 ```shell
+npm install
 node index
 ```
