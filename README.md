@@ -1,24 +1,33 @@
-# IOTA EcoSystem Development Fund Grant/Donation Tracker Audit
+# IOTA EcoSystem Development Fund Grant/Donation Tracker Audit Data Validation
 
-The code in this repository demonstrates how to use the audit data downloaded from the tracker.
+The code in this repository demonstrates how to use the audit data downloaded from the tracker and verify its integrity.
 
-The validation will iterate over the indexes and bundles and validates their RSA-SHA256 signatures using the [public.key](./public.key).
+The verification will iterate over the indexes and bundles in the **./audit-data.json** file and verify the RSA-SHA256 signatures using the **./public.key** file.
 
-The documents referenced in the bundles are then downloaded from online storage and validated as well.
+The documents referenced in the bundles are then downloaded from online storage and their signature verified as well.
 
-## Getting audit data
+## Getting Audit Data and Public Key
 
 You must first obtain the audit data and public key from the tracker.
 
 * [https://transparency.iota.org/audit](https://transparency.iota.org/audit)
 
-Click the *Export Data* data button to download the data and *Public Key* to get the public key to verify the signatures.
+Click the *Export Data* button to download the audit data file and save it into **./audit-data.json**
+
+ Click the *Public Key* button to download the public key file and save it into **./public.key**
 
 ## Running
 
-To run the code just issue the following commands:
+First install the pre-requisite modules:
 
 ```shell
-npm install
+npm install or yarn install
+```
+
+Run the code by issuing the following command:
+
+```shell
 node index
 ```
+
+You should see console output which displays the signatures in the index and bundles being verified, and then the documents being downloaded and their signatures verified.
