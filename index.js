@@ -2,8 +2,6 @@ const crypto = require("crypto");
 const fs = require("fs");
 const rp = require("request-promise-native");
 
-const ROOT_DOCUMENT_URL = "https://s3.eu-west-2.amazonaws.com/iota-ecosystem-tracker-storage/projects/";
-
 async function validate() {
     const pubKeyBuffer = fs.readFileSync("./public.key");
     const pubKey = pubKeyBuffer.toString();
@@ -81,7 +79,7 @@ async function validate() {
 
     const docKeys = Object.keys(documents);
     for (let x = 0; x < docKeys.length; x++) {
-        const url = `${ROOT_DOCUMENT_URL}${docKeys[x]}`;
+        const url = `${auditData.storageRoot}${docKeys[x]}`;
         console.log(`Downloading ${url}`);
         const file = await rp.get({
             url,
