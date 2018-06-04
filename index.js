@@ -2,13 +2,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const rp = require("request-promise-native");
 
-async function validate() {
-    const pubKeyBuffer = fs.readFileSync("./public.key");
-    const pubKey = pubKeyBuffer.toString();
-
-    const auditDataBuffer = fs.readFileSync("./audit-data.json");
-    const auditData = JSON.parse(auditDataBuffer.toString());
-
+async function validate(auditData, publicKey) {
     console.log("Validating Indexes");
     console.log("==================");
     console.log("");
@@ -22,7 +16,7 @@ async function validate() {
 
         const verifier = crypto.createVerify("RSA-SHA256");
         verifier.update(dataToVerify);
-        const isValid = verifier.verify(pubKey, verifySig, "hex");
+        const isValid = verifier.verify(publicKey, verifySig, "hex");
         if (isValid) {
             console.log(`Index ${auditData.indexes[i].hash} signature is verified`);
         } else {
@@ -64,7 +58,7 @@ async function validate() {
 
         const verifier = crypto.createVerify("RSA-SHA256");
         verifier.update(dataToVerify);
-        const isValid = verifier.verify(pubKey, verifySig, "hex");
+        const isValid = verifier.verify(publicKey, verifySig, "hex");
         if (isValid) {
             console.log(`\tBundle signature is verified`);
         } else {
@@ -88,7 +82,7 @@ async function validate() {
 
         const verifier = crypto.createVerify("RSA-SHA256");
         verifier.update(file);
-        const isValid = verifier.verify(pubKey, documents[docKeys[x]], "hex");
+        const isValid = verifier.verify(publicKey, documents[docKeys[x]], "hex");
         if (isValid) {
             console.log(`\tDocument signature is verified`);
         } else {
@@ -98,4 +92,10 @@ async function validate() {
     }
 }
 
-validate();
+const publicKeyBuffer = fs.readFileSync("./public.key");
+const publicKey = publicKeyBuffer.toString();
+
+const auditDataBuffer = fs.readFileSync("./audit-data.json");
+const auditData = JSON.parse(auditDataBuffer.toString());
+
+validate(auditData, publicKey);
