@@ -10,7 +10,10 @@ async function validate(auditData, publicKey) {
     for (let i = 0; i < auditData.indexes.length; i++) {
         const indexData = auditData.indexes[i].index;
         const verifySig = indexData.sig;
+        const hash = indexData.bundleHash;
         delete indexData.sig;
+        delete indexData.bundleHash;
+        delete indexData.transactionHashes;
 
         const dataToVerify = JSON.stringify(indexData);
 
@@ -18,9 +21,9 @@ async function validate(auditData, publicKey) {
         verifier.update(dataToVerify);
         const isValid = verifier.verify(publicKey, verifySig, "hex");
         if (isValid) {
-            console.log(`Index ${auditData.indexes[i].hash} signature is verified`);
+            console.log(`Index ${hash} signature is verified`);
         } else {
-            console.error(`Index ${auditData.indexes[i].hash} signature fails verification`);
+            console.error(`Index ${hash} signature fails verification`);
         }
 
         for (let j = 0; j < indexData.bundles.length; j++) {
